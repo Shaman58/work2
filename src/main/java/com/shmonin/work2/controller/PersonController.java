@@ -1,65 +1,53 @@
 package com.shmonin.work2.controller;
 
+import com.shmonin.work2.dto.PersonDto;
+import com.shmonin.work2.mapper.PersonMapper;
 import com.shmonin.work2.model.Person;
+import com.shmonin.work2.service.PersonService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/person")
+@RequiredArgsConstructor
 public class PersonController {
 
-    private final List<Person> persons = new ArrayList<>();
+    private final PersonService personService;
+    private final PersonMapper personMapper;
 
-    {
-        persons.add(new Person("john", 20));
-        persons.add(new Person("joanna", 24));
-        persons.add(new Person("bred", 50));
-        persons.add(new Person("kate", 33));
+    @GetMapping("/person")
+    public Person getByName(@RequestParam String name) {
+        return personService.getByName(name);
     }
 
-    @GetMapping("/get-by-name")
-    public String getPersonByRequestParam(@RequestParam String name) {
-        var person = findByName(name);
-        return String.format("Person name: %s, age: %s", person.getName(), person.getAge());
+    @PutMapping("/person/{id}")
+    public Person changeAgeById(@PathVariable Long id, @RequestParam int age) {
+        return personService.changeAgeById(id, age);
     }
 
-    @GetMapping("/get-by-path-name/{name}")
-    public String getPersonByPathValue(@PathVariable String name) {
-        var person = findByName(name);
-        return String.format("Person name: %s, age: %s", person.getName(), person.getAge());
+    @DeleteMapping("/person/{id}")
+    public void deleteById(@PathVariable Long id) {
+        personService.deleteById(id);
     }
 
-    @PostMapping("/get-by-name-json")
-    public String getPersonByRequestBody(@RequestBody String name) {
-        var person = findByName(name.split(":")[1].split("\"")[1]);
-        return String.format("Person name: %s, age: %s", person.getName(), person.getAge());
+    @GetMapping("/person/{name}/{age}")
+    public Person getByNameAndAge(@PathVariable String name, @PathVariable int age) {
+        return personService.getByNameAndAge(name, age);
     }
 
-    @PostMapping("/add")
-    public String addPerson(@RequestParam String name, @RequestParam int age) {
-        var person = new Person(name, age);
-        persons.add(person);
-        return String.format("Person has been added! Person name: %s, age: %s", person.getName(), person.getAge());
+    @GetMapping("/persons")
+    public List<Person> getAllByAge(@RequestParam int age) {
+        return personService.getAllByAge(age);
     }
 
-    @PostMapping("/{name}")
-    public String editPerson(@PathVariable String name, @RequestBody Person person) {
-        var targetPerson = findByName(name);
-        targetPerson.setName(person.getName());
-        targetPerson.setAge(person.getAge());
-        return String.format("Person has been edited! Person name: %s, age: %s", targetPerson.getName(), targetPerson.getAge());
+    @PutMapping("/person")
+    public Person save(@RequestBody Person person) {
+        return personService.save(person);
     }
 
-    @PostMapping("/delete/{name}")
-    public String deletePerson(@PathVariable String name) {
-        var person = findByName(name);
-        persons.remove(person);
-        return String.format("Person has been deleted! Person name: %s, age: %s", person.getName(), person.getAge());
-    }
-
-    private Person findByName(String name) {
-        return persons.stream().filter(p -> p.getName().equals(name)).findFirst().get();
+    @GetMapping("/persons/after30")
+    public List<PersonDto> getAllByAgeAfter() {
+        return personMapper.toDto(personService.getAllByAgeAfter30());
     }
 }
