@@ -26,7 +26,9 @@ public class Person {
     @Column(name = "creation_date")
     private LocalDate creationDate;
     private String password;
-    private String passport;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "passport_id")
+    private Passport passport;
     private String address;
     private String mobile;
 }

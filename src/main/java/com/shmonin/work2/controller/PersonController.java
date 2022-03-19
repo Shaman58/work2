@@ -17,13 +17,13 @@ public class PersonController {
     private final PersonMapper personMapper;
 
     @GetMapping("/person")
-    public Person getByName(@RequestParam String name) {
-        return personService.getByName(name);
+    public PersonDto getByName(@RequestParam String name) {
+        return personMapper.toDto(personService.getByName(name));
     }
 
     @PutMapping("/person/{id}")
-    public Person changeAgeById(@PathVariable Long id, @RequestParam int age) {
-        return personService.changeAgeById(id, age);
+    public PersonDto changeAgeById(@PathVariable Long id, @RequestParam int age) {
+        return personMapper.toDto(personService.changeAgeById(id, age));
     }
 
     @DeleteMapping("/person/{id}")
@@ -32,18 +32,18 @@ public class PersonController {
     }
 
     @GetMapping("/person/{name}/{age}")
-    public Person getByNameAndAge(@PathVariable String name, @PathVariable int age) {
-        return personService.getByNameAndAge(name, age);
+    public PersonDto getByNameAndAge(@PathVariable String name, @PathVariable int age) {
+        return personMapper.toDto(personService.getByNameAndAge(name, age));
     }
 
     @GetMapping("/persons")
-    public List<Person> getAllByAge(@RequestParam int age) {
-        return personService.getAllByAge(age);
+    public List<PersonDto> getAllByAge(@RequestParam int age) {
+        return personMapper.toDto(personService.getAllByAge(age));
     }
 
     @PutMapping("/person")
-    public Person save(@RequestBody Person person) {
-        return personService.save(person);
+    public PersonDto save(@RequestBody Person person) {
+        return personMapper.toDto(personService.save(person));
     }
 
     @GetMapping("/persons/after30")

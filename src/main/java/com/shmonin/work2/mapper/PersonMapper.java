@@ -11,12 +11,18 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class PersonMapper {
 
+    private PassportMapper passportMapper;
+
+    public PersonMapper(PassportMapper passportMapper) {
+        this.passportMapper = passportMapper;
+    }
+
     public PersonDto toDto(Person person) {
         var personDto = new PersonDto();
         personDto.setName(person.getName());
         personDto.setSurname(person.getSurname());
         personDto.setAge(person.getAge());
-        personDto.setPatronymic(person.getPatronymic());
+        personDto.setPassport(passportMapper.toDto(person.getPassport()));
         return personDto;
     }
 
