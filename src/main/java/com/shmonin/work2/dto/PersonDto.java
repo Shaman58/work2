@@ -1,6 +1,5 @@
 package com.shmonin.work2.dto;
 
-import com.shmonin.work2.model.Passport;
 import lombok.Getter;
 import lombok.Setter;
 

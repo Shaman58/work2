@@ -15,8 +15,8 @@ public class PersonController {
     private final PersonService personService;
 
     @GetMapping("/person")
-    public PersonDto getByName(@RequestParam String name) {
-        return personService.getByName(name);
+    public PersonDto findByName(@RequestParam String name) {
+        return personService.findByName(name);
     }
 
     @PutMapping("/person/{id}")
@@ -30,13 +30,13 @@ public class PersonController {
     }
 
     @GetMapping("/person/{name}/{age}")
-    public PersonDto getByNameAndAge(@PathVariable String name, @PathVariable int age) {
-        return personService.getByNameAndAge(name, age);
+    public PersonDto findByNameAndAge(@PathVariable String name, @PathVariable int age) {
+        return personService.findByNameAndAge(name, age);
     }
 
     @GetMapping("/persons")
-    public List<PersonDto> getAllByAge(@RequestParam int age) {
-        return personService.getAllByAge(age);
+    public List<PersonDto> findAllByAge(@RequestParam int age) {
+        return personService.findAllByAge(age);
     }
 
     @PutMapping("/person")
@@ -45,7 +45,7 @@ public class PersonController {
     }
 
     @GetMapping("/persons/after30")
-    public List<PersonDto> getAllByAgeAfter() {
-        return personService.getAllByAgeAfter30();
+    public List<PersonDto> findAllByAgeAfter() {
+        return personService.findAllByAgeAfter30();
     }
 }

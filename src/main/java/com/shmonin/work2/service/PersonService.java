@@ -19,26 +19,35 @@ public class PersonService {
     private final PersonRepository personRepository;
     private final PassportService passportService;
 
-    public PersonDto getByName(String name) {
-        return toDto(personRepository.findByName(name).orElseThrow(() -> new EntityNotFoundException(format("There is no person with name=%s in database", name))));
+    public PersonDto findByName(String name) {
+        return toDto(personRepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException(format("There is no person with name=%s in database", name))));
+    }
+
+    public Person findById(Long id) {
+        return personRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(format("There is no person with id=%d in database", id)));
     }
 
     public PersonDto changeAgeById(Long id, int age) {
-        var person = personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(format("There is no person with id=%d in database", id)));
+        var person = personRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(format("There is no person with id=%d in database", id)));
         person.setAge(age);
         return toDto(personRepository.save(person));
     }
 
     public void deleteById(Long id) {
-        personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(format("There is no person with id=%d in database", id)));
+        personRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(format("There is no person with id=%d in database", id)));
         personRepository.deleteById(id);
     }
 
-    public PersonDto getByNameAndAge(String name, int age) {
-        return toDto(personRepository.findByNameAndAge(name, age).orElseThrow(() -> new EntityNotFoundException(format("There is no person with name=%s and age=%d in database", name, age))));
+    public PersonDto findByNameAndAge(String name, int age) {
+        return toDto(personRepository.findByNameAndAge(name, age)
+                .orElseThrow(() -> new EntityNotFoundException(format("There is no person with name=%s and age=%d in database", name, age))));
     }
 
-    public List<PersonDto> getAllByAge(int age) {
+    public List<PersonDto> findAllByAge(int age) {
         return toDto(personRepository.findAllByAge(age));
     }
 
@@ -47,7 +56,7 @@ public class PersonService {
         return toDto(savedPerson);
     }
 
-    public List<PersonDto> getAllByAgeAfter30() {
+    public List<PersonDto> findAllByAgeAfter30() {
         return toDto(personRepository.findAllByAgeAfter30());
     }
 
@@ -60,7 +69,10 @@ public class PersonService {
         return personDto;
     }
 
-    private List<PersonDto> toDto(List<Person> people) {
+    public List<PersonDto> toDto(List<Person> people) {
+        if (people == null) {
+            return null;
+        }
         return people.stream().map(this::toDto).collect(toList());
     }
 }
