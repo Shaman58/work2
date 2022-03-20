@@ -25,8 +25,8 @@ public class PersonService {
     }
 
     public Person findById(Long id) {
-        return personRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(format("There is no person with id=%d in database", id)));
+        return personRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(format("There is no person with id=%d in database", id)));
     }
 
     public PersonDto changeAgeById(Long id, int age) {
