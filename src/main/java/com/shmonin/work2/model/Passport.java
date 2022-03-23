@@ -1,8 +1,14 @@
 package com.shmonin.work2.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
@@ -10,7 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "passports")
+@Table(name = "passports", uniqueConstraints = {@UniqueConstraint(columnNames = {"series", "number"})})
 public class Passport {
 
     @Id

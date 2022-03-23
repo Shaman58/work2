@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-autor
+      author: Shmonin
+      changes:
+        - createTable:
+            tableName: passport
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: series
+                  type: varchar(4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: number
+                  type: varchar(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date
+                  type: date
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            columnNames: series, number
+            constraintName: series_number_uniq
+            tableName: passport

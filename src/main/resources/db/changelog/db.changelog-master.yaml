@@ -1,0 +1,11 @@
+databaseChangelog:
+  - include:
+      file: db/changelog/changeset/crate-persons-table.yaml
+  - include:
+      file: db/changelog/changeset/change-persons-table.yaml
+  - include:
+      file: db/changelog/changeset/create-passports-table.yaml
+  - include:
+      file: db/changelog/changeset/add-passport-to-the-persons-table.yaml
+  - include:
+      file: db/changelog/changeset/create-departments-table.yaml

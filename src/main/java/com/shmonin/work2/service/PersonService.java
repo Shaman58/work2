@@ -37,8 +37,7 @@ public class PersonService {
     }
 
     public void deleteById(Long id) {
-        personRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(format("There is no person with id=%d in database", id)));
+        findById(id);
         personRepository.deleteById(id);
     }
 
@@ -70,9 +69,6 @@ public class PersonService {
     }
 
     public List<PersonDto> toDto(List<Person> people) {
-        if (people == null) {
-            return null;
-        }
         return people.stream().map(this::toDto).collect(toList());
     }
 }

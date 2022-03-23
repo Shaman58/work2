@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-autor
+      author: Shmonin
+      changes:
+        - addColumn:
+            tableName: persons
+            columns:
+              - column:
+                  name: passport_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: person-passport-fk
+                    referencedTableName: passpots
+                    referencedColumnNames: id

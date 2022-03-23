@@ -4,12 +4,11 @@ import com.shmonin.work2.dto.DepartmentDto;
 import com.shmonin.work2.exception.EntityNotFoundException;
 import com.shmonin.work2.model.Department;
 import com.shmonin.work2.repository.DepartmentRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
@@ -31,6 +30,7 @@ public class DepartmentService {
     }
 
     public void remove(Long id) {
+        findById(id);
         departmentRepository.deleteById(id);
     }
 
@@ -64,9 +64,6 @@ public class DepartmentService {
     }
 
     public List<DepartmentDto> toDto(List<Department> departments) {
-        if (departments == null) {
-            return null;
-        }
         return departments.stream().map(this::toDto).collect(toList());
     }
 }

@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-autor
+      author: Shmonin
+      changes:
+        - addColumn:
+            tableName: persons
+            columns:
+              - column:
+                  name: surname
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: patronymic
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: creation_date
+                  type: date
+                  constraints:
+                    nullable: true
+              - column:
+                  name: password
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: mobile
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
